@@ -1,36 +1,36 @@
-# 📚 Books to Scrape Web Scraper
+# 📚 Books to Scrape — Web Scraper
 
-A Python web scraping project that extracts book information from the **Books to Scrape** website and stores the collected data in a CSV file.
+A small Python scraper that extracts book information from the Books to Scrape demo site and saves results to CSV.
 
 ## 🚀 Features
 
-* Scrapes data from all 50 catalogue pages.
+* Scrapes data from catalogue pages (configurable page range).
 * Extracts:
 
   * Book Title
   * Price (£)
-  * Stock Availability
   * Rating
-* Stores data in a structured CSV file.
+  * Quantity
+* Stores data in a structured CSV file (`data/books.csv`).
 * Uses error handling to prevent unexpected crashes.
 
 ---
 
 ## 🛠️ Technologies Used
 
-* Python 3.x
-* BeautifulSoup4
-* Requests
-* Pandas
+* Python 3.8+
+* beautifulsoup4
+* requests
+* pandas
 
 ---
 
 ## 📦 Required Libraries
 
-Install the required dependencies:
+Install the required dependencies (recommended inside a virtualenv):
 
 ```bash
-pip install beautifulsoup4 requests pandas
+pip install -r requirements.txt
 ```
 
 ---
@@ -38,11 +38,14 @@ pip install beautifulsoup4 requests pandas
 ## 📂 Project Structure
 
 ```text
-project/
+e:/web scrape/
 │
-├── scraper.py
-├── books.csv
-└── README.md
+├── README.md
+├── requirements.txt
+├── scraper.py          # experimental: contains an alternative scraping flow
+├── title_scrape.py     # main script (recommended)
+└── data/
+  └── books.csv       # output
 ```
 
 ---
@@ -53,50 +56,46 @@ project/
 | ------------------ | ----------------------------------------- |
 | Book Name          | Title of the book                         |
 | Price (£)          | Price of the book in British Pounds       |
-| Stock Availability | Availability status of the book           |
 | Rating             | Book rating (One, Two, Three, Four, Five) |
+| Quantity           | Available stock (integer)                 |
 
 ---
 
 ## ▶️ How to Run
 
-1. Clone the repository:
+1. (Optional) Clone the repository or copy the project files to your local machine.
+
+2. Install dependencies:
 
 ```bash
-git clone https://github.com/KarthiPrasath26/books-scraper.git
+pip install -r requirements.txt
 ```
 
-2. Navigate to the project directory:
+3. Run the main scraper:
 
 ```bash
-cd books-scraper
+python title_scrape.py
 ```
 
-3. Run the script:
+4. Output: `data/books.csv` will be created/updated with the scraped rows.
 
-```bash
-python scraper.py
-```
-
-4. After execution, a file named `books.csv` will be generated in the project directory.
+Note: `scraper.py` is an alternate/experimental script in the repo and may require fixes before use.
 
 ---
 
 ## 📊 Sample Output
 
-| Book Name            | Price (£) | Stock Availability | Rating |
-| -------------------- | --------- | ------------------ | ------ |
-| A Light in the Attic | 51.77     | In stock           | Three  |
-| Tipping the Velvet   | 53.74     | In stock           | One    |
-| Soumission           | 50.10     | In stock           | One    |
+| Book Name            | Price (£) | Rating | Quantity |
+| -------------------- | --------- | ------ | -------- |
+| A Light in the Attic | 51.77     | Three  | 22       |
+| Tipping the Velvet   | 53.74     | One    | 20       |
+| Soumission           | 50.10     | One    | 20       |
 
 ---
 
 ## 🔍 Website Scraped
 
-Target Website:
-
-https://books.toscrape.com
+Target website: https://books.toscrape.com
 
 This website is specifically designed for practicing web scraping and data extraction techniques.
 
@@ -105,33 +104,24 @@ This website is specifically designed for practicing web scraping and data extra
 ## ⚙️ Working Principle
 
 1. Send HTTP requests to catalogue pages.
-2. Parse HTML content using BeautifulSoup.
-3. Locate book information elements.
-4. Extract title, price, rating, and stock status.
-5. Store extracted records in a list.
-6. Convert records into a Pandas DataFrame.
-7. Export the DataFrame to a CSV file.
+2. Parse HTML using BeautifulSoup.
+3. Locate book information elements and extract fields.
+4. Accumulate results into a Pandas DataFrame and export to CSV.
 
 ---
 
 ## ⚠️ Error Handling
 
-The script includes a `try-except` block to handle unexpected exceptions during scraping and file generation.
-
-```python
-except Exception as e:
-    print(f"An error occurred: {e}")
-```
+The scripts include basic `try-except` error handling to avoid crashes. Consider adding retries and logging for production use.
 
 ---
 
 ## 📈 Future Improvements
 
 * Export data to Excel format.
-* Add book category extraction.
-* Implement logging functionality.
-* Add retry mechanism for failed requests.
-* Store data in SQL databases.
+* Add book category and other metadata extraction.
+* Implement robust logging and retry/backoff for requests.
+* Store data in SQL databases or parquet files.
 * Create visualizations using Matplotlib or Power BI.
 
 ---
